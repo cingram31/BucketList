@@ -6,7 +6,12 @@ exports.signup = function(req, res, next){
 	//1
 	var email = req.body.email;
 	var password = req.body.password;
+	
 	//2
+	if ( !email || !password){
+					return res.status(418).send({error: 'You must provide email and pw.'});
+				}
+
 	User.findOne({ email: email }, function(err, existingUser){
 				if(err) {
 					return next(err);
@@ -30,6 +35,5 @@ exports.signup = function(req, res, next){
 			//4 Respond to request indicating the user was created
 				res.json({success: true});
 			});
-
-	});
-}
+		});
+	}
