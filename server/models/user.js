@@ -13,7 +13,7 @@ var userSchema = new Schema({
 
 userSchema.pre('save', function(next){
 	var user = this;
-
+	console.log("user variable: ", user);
 		bcrypt.genSalt(10, function(err, salt){
 			if(err) { return next(err); }
 
@@ -22,6 +22,18 @@ userSchema.pre('save', function(next){
 			
 			user.password = hash;
 			next();
+
+userSchema.methods.comparePassword = function(candidatePassword, callback){
+
+		//this.password is our hashed and salted password
+
+	bcrypt.compare(candidatePassword, this.password, function(err, isMatch){
+		//if there was an error, return the callback with the error
+		if (err) { return callback(err); }
+		//otherwise call the callback
+		callback(null, isMatch);
+	});
+}
 		});
 	});
 });
