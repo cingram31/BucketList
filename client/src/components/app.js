@@ -1,8 +1,8 @@
-import React from 'react';
-import { Component } from 'react';
-import NavBarHeader from './nav';
+import React, { Component } from 'react';
 import Video from './video/video';
-import BandList from './containers/BandList';
+//import BandList from './containers/BandList';
+import NavBarHeader from './Nav';
+import Signin from './auth/signin';
 
 
 	export default class App extends Component {
@@ -10,7 +10,8 @@ import BandList from './containers/BandList';
 			return (
 				<div>
 					<NavBarHeader />
-					<BandList />
+					<Video />
+					{this.props.children}
 				</div>
 			);
 		}
