@@ -1,4 +1,6 @@
 var Auth = require('./controllers/auth'); //include the authorization controller
+var BucketList = require('./controllers/bucketlistcontroller');
+
 var passportService = require('./services/passport'); 
 var passport = require('passport');
 
@@ -14,8 +16,8 @@ module.exports = function(app){  //sets routes
 	
 	
 	app.post('/signup', Auth.signup);
-
 	app.post('/signin', requireSignin, Auth.signin);
+	app.post('/newitem', requireAuth, BucketList.addBucketList);
 }
 
 
