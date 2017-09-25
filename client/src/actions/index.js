@@ -5,11 +5,15 @@ import {
 	UNAUTH_USER,
 	AUTH_ERROR,
 	CREATE_POSTS,
-	FETCH_POSTS
+	FETCH_POSTS,
+	FETCH_POST,
+	DELETE_POST,
+	UPDATE_POST
 } from './types';
 import authReducer from '../reducers/auth_reducer';
 
-const ROOT_URL = 'http://localhost:3000';
+const ROOT_URL = 'http://rest.learncode.academy/api/paul';
+//const ROOT_URL = 'http://localhost:3000';
 
 var config = {
 	headers: { authorization: localStorage.getItem('token') }
@@ -82,6 +86,45 @@ export function fetchPosts() {
 				type: FETCH_POSTS,
 				payload: response
 			});
+		});
+	}
+}
+
+export function fetchPost(id) {
+	return function(dispatch) {
+		axios.get(`${ROOT_URL}/items/${id}`, config)
+		.then( (response) => {
+			console.log("Response", response)
+			dispatch({
+				type: FETCH_POST,
+				payload: response
+			});
+		});
+	}
+}
+
+export function deletePost(id) {
+	return function(dispatch) {
+		axios.delete(`${ROOT_URL}/items/${id}`, config)
+		.then( (response) => {
+			dispatch({
+				type:DELETE_POST,
+				payload: response
+			});
+			browserHistory.push('.items');
+		});
+	}
+}
+
+export function updatePost(props, id) {
+	return function(dispatch) {
+		axios.put(`${ROOT_URL}/items/${id}`, { props }, config)
+		.then(response => {
+			dispatch({
+				type: UPDATE_POST,
+				payload: response
+			});
+			browserHistory.push('/items');
 		});
 	}
 }

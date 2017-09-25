@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../actions/index';
+import  * as actions  from '../../actions/index';
 import { Link } from 'react-router';
 import axios from 'axios';
 
@@ -71,7 +71,7 @@ class ListItems extends Component {
 		return { posts: state.posts.all };
 	}
 
-	export default connect(mapStateToProps, { fetchPosts: fetchPosts })(ListItems);
+	export default connect(mapStateToProps, actions)(ListItems);
 
 
 
